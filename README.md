@@ -19,6 +19,7 @@ Run the automated tests with `npm test`.
 | --- | --- | --- | --- |
 | `POST` | `/api/auth/login` | Public | Return a JWT token. |
 | `GET` | `/api/products?page=1` | Public | List products, 10 per page. |
+| `GET` | `/api/products/category/:category?page=1` | Public | Products in a category by price descending, 5 per page. |
 | `GET` | `/api/products/:id` | Public | Get one product. |
 | `POST` | `/api/products` | Admin | Create a product. |
 | `PUT` | `/api/products/:id` | Admin | Update a product. |
@@ -36,6 +37,10 @@ At startup the configured `INITIAL_ADMIN_EMAIL` and `INITIAL_ADMIN_PASSWORD` cre
 ```
 
 `name`, `price`, and `quantity` are required for both creation and updates. `category` is optional. Input failures return `422`; missing or invalid authentication returns `401`; valid non-admin tokens receive `403`.
+
+## Query optimization (Challenge 2)
+
+The PostgreSQL price-range query, MongoDB category query, their indexes, and how to verify them with `EXPLAIN` are described in [docs/query-optimization.md](docs/query-optimization.md).
 
 ---
 

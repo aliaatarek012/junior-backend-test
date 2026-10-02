@@ -10,6 +10,11 @@ export const listProducts: RequestHandler = asyncHandler(async (req, res) => {
   const result = await productService.list(Number(req.query.page ?? 1)); res.status(200).json({ success: true, data: result.products, pagination: result.pagination });
 });
 
+export const listProductsByCategory: RequestHandler = asyncHandler(async (req, res) => {
+  const result = await productService.listByCategory(String(req.params.category), { page: req.query.page });
+  res.status(200).json({ success: true, data: result.products, pagination: result.pagination });
+});
+
 export const getProduct: RequestHandler = asyncHandler(async (req, res) => {
   res.status(200).json({ success: true, data: await productService.getById(String(req.params.id)) });
 });

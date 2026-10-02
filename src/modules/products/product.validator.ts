@@ -7,4 +7,5 @@ export const productFields = [
   body("quantity").isInt({ min: 0 }).withMessage("Quantity must be a non-negative integer.").toInt(),
 ];
 export const productIdValidation = [param("id").isMongoId().withMessage("Product id must be valid.")];
+export const categoryValidation = [param("category").trim().notEmpty().withMessage("Category is required.").isLength({ max: 100 }).withMessage("Category must be at most 100 characters.")];
 export const paginationValidation = [query("page").optional().isInt({ min: 1 }).withMessage("Page must be a positive integer.").toInt()];

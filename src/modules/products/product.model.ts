@@ -8,5 +8,5 @@ const productSchema = new Schema<Product>({
   quantity: { type: Number, required: true, min: 0, validate: { validator: Number.isInteger, message: "Quantity must be an integer." } },
 }, { timestamps: true, versionKey: false });
 
-productSchema.index({ category: 1, price: -1 });
+productSchema.index({ category: 1, price: -1, _id: -1 });
 export const ProductModel = model<Product>("Product", productSchema);

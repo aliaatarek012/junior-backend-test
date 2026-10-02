@@ -1,11 +1,12 @@
 import { Router } from "express";
 import * as controller from "./product.controller";
-import { productFields, productIdValidation, paginationValidation } from "./product.validator";
+import { productFields, productIdValidation, paginationValidation, categoryValidation } from "./product.validator";
 import { authenticate } from "../../middleware/auth.middleware";
 import { authorize } from "../../middleware/role.middleware";
 import { validate } from "../../middleware/validation.middleware";
 const router = Router();
 router.get("/", paginationValidation, validate, controller.listProducts);
+router.get("/category/:category", categoryValidation, paginationValidation, validate, controller.listProductsByCategory);
 router.get("/:id", productIdValidation, validate, controller.getProduct);
 router.post("/", authenticate, authorize("admin"), productFields, validate, controller.createProduct);
 router.put("/:id", authenticate, authorize("admin"), productIdValidation, productFields, validate, controller.updateProduct);
