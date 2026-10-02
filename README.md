@@ -1,4 +1,45 @@
-# Backend Developer Coding Test
+# Product Inventory API
+
+TypeScript Express and MongoDB REST API with JWT authentication, role-based authorization, Express Validator input checks, Swagger documentation, and ten-item pagination.
+
+Interactive OpenAPI documentation is available at `/api-docs`. Log in at `POST /api/auth/login`, copy `data.token`, then use **Authorize** with `Bearer <token>` to test protected product operations.
+
+## Run locally
+
+1. Install dependencies: `npm install`
+2. Copy `.env.example` to `.env`, replacing all placeholder secrets and the initial admin password.
+3. Start MongoDB, or configure a reachable `MONGODB_URI`.
+4. Run `npm run dev` during development. Use `npm run build` followed by `npm start` for production.
+
+Run the automated tests with `npm test`.
+
+## Endpoints
+
+| Method | Endpoint | Access | Purpose |
+| --- | --- | --- | --- |
+| `POST` | `/api/auth/login` | Public | Return a JWT token. |
+| `GET` | `/api/products?page=1` | Public | List products, 10 per page. |
+| `GET` | `/api/products/:id` | Public | Get one product. |
+| `POST` | `/api/products` | Admin | Create a product. |
+| `PUT` | `/api/products/:id` | Admin | Update a product. |
+| `DELETE` | `/api/products/:id` | Admin | Delete a product. |
+
+At startup the configured `INITIAL_ADMIN_EMAIL` and `INITIAL_ADMIN_PASSWORD` create an admin only if that email does not already exist. Likewise, the optional `INITIAL_USER_EMAIL` and `INITIAL_USER_PASSWORD` create a regular `user` account, useful for checking that non-admin tokens receive `403`. Both are persisted with a bcrypt hash. Provide the returned token as `Authorization: Bearer <token>` for write operations. Pagination is one-based; invalid page values receive a validation error.
+
+```json
+{
+  "name": "Mechanical Keyboard",
+  "category": "Electronics",
+  "price": 99.99,
+  "quantity": 25
+}
+```
+
+`name`, `price`, and `quantity` are required for both creation and updates. `category` is optional. Input failures return `422`; missing or invalid authentication returns `401`; valid non-admin tokens receive `403`.
+
+---
+
+# Original Test Brief
 
 Welcome to the coding test for the **Backend Developer role**. This test evaluates your skills in Node.js, Express.js, Express Validator, JWT Authentication, Authorization Middleware, database management, and API design.
 
